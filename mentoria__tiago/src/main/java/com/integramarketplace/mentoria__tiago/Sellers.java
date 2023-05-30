@@ -14,14 +14,14 @@ import java.util.Random;
 public class Sellers {
 
     @Id
-    private SellerId sellerId;
+    private integramarketplace.mentoriatiago.integraMarketPlace.SellerId sellerId;
     @Indexed
     private String name;
     @Indexed
     private String registrationCode;
     @Indexed
-    private Contacts contacts;
+    private integramarketplace.mentoriatiago.integraMarketPlace.Contacts contacts;
     @Indexed
-    private Address address;
+    private integramarketplace.mentoriatiago.integraMarketPlace.Address address;
 
 }
