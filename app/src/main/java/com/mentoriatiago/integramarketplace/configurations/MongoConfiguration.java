@@ -1,4 +1,4 @@
-package integramarketplace.mentoriatiago.integraMarketPlace;
+package com.mentoriatiago.integramarketplace.configurations;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @Configuration
 @EnableMongoAuditing
-@EnableMongoRepositories(basePackages = {"integramarketplace.mentoriatiago.integramarketplace"})
+@EnableMongoRepositories(basePackages = {"com.mentoriatiago.integramarketplace"})
 public class MongoConfiguration {
+
 }

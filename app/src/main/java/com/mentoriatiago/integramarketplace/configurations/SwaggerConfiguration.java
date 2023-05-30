@@ -1,4 +1,4 @@
-package com.integramarketplace.mentoria__tiago;
+package com.mentoriatiago.integramarketplace.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfiguration {
 
-    private static final String BASE_PACKAGE = "com.integramarketplace.mentoria__tiago";
+    private static final String BASE_PACKAGE = "com.mentoriatiago.integramarketplace.gateways";
 
     @Bean
     public Docket internal() {

@@ -1,4 +1,4 @@
-package com.integramarketplace.mentoria__tiago;
+package com.mentoriatiago.integramarketplace;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

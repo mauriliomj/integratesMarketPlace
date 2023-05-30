@@ -1,4 +1,4 @@
-package integramarketplace.mentoriatiago.integraMarketPlace;
+package com.mentoriatiago.integramarketplace.domains;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

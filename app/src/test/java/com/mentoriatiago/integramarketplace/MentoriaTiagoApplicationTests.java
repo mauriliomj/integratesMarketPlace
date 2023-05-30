@@ -1,4 +1,4 @@
-package com.integramarketplace.mentoria__tiago;
+package com.mentoriatiago.integramarketplace;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
