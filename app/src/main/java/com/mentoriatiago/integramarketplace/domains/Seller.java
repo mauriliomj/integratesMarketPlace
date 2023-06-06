@@ -21,5 +21,9 @@ public class Seller {
     private Contact contact;
     @Indexed
     private Address address;
+    /*@Indexed
+    private CreatedDate createdDate;
+    @Indexed
+    private LastModifiedDate lastModifiedDate;*/
 
 }

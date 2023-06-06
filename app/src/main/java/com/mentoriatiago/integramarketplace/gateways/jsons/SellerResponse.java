@@ -1,8 +1,6 @@
 package com.mentoriatiago.integramarketplace.gateways.jsons;
 
-import com.mentoriatiago.integramarketplace.domains.Address;
-import com.mentoriatiago.integramarketplace.domains.Contact;
-import com.mentoriatiago.integramarketplace.domains.Seller;
+import com.mentoriatiago.integramarketplace.domains.*;
 import lombok.Getter;
 
 @Getter
@@ -12,6 +10,8 @@ public class SellerResponse {
     private String registrationCode;
     private Contact contact;
     private Address address;
+    //private CreatedDate createdDate;
+    //private LastModifiedDate lastModifiedDate;
 
     public SellerResponse(Seller seller) {
         this.sellerId = seller.getSellerId().getSellerId();
@@ -19,6 +19,8 @@ public class SellerResponse {
         this.registrationCode = seller.getRegistrationCode();
         this.contact = seller.getContact();
         this.address = seller.getAddress();
+        //this.createdDate = seller.getCreatedDate();
+        //this.lastModifiedDate = seller.getLastModifiedDate();
     }
 
 }
