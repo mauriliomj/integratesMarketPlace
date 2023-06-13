@@ -1,4 +1,4 @@
-package com.mentoriatiago.integramarketplace.exceptions;
+package com.mentoriatiago.integramarketplace.exceptionsAndValidations;
 
 import java.util.List;
 public class ErrorResponse {

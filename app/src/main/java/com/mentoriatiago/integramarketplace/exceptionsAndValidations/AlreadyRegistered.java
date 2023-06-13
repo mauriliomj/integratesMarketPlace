@@ -1,7 +1,7 @@
-package com.mentoriatiago.integramarketplace.exceptions;
+package com.mentoriatiago.integramarketplace.exceptionsAndValidations;
 
 public class AlreadyRegistered extends RuntimeException{
-    AlreadyRegistered(String erro){
-        super(erro);
+    public AlreadyRegistered(String error){
+        super(error);
     }
 }

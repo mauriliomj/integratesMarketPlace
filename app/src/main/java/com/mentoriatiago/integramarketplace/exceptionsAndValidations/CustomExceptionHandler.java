@@ -1,4 +1,4 @@
-package com.mentoriatiago.integramarketplace.exceptions;
+package com.mentoriatiago.integramarketplace.exceptionsAndValidations;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -33,14 +33,24 @@ public class CustomExceptionHandler {
 
     }
 
-    @ExceptionHandler(AlreadyRegistered.class)
-    public HttpEntity<ErrorResponse> handlerValidationException(final  AlreadyRegistered ex) {
-        List<String> erros = new ArrayList<>();
-        erros.add(ex.getMessage());
-        final ErrorResponse response = new ErrorResponse(erros);
+    @ExceptionHandler(BadRequest.class)
+    public HttpEntity<ErrorResponse> handlerValidationException(final  BadRequest ex) {
+        List<String> errors = new ArrayList<>();
+        errors.add(ex.getMessage());
+        final ErrorResponse response = new ErrorResponse(errors);
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add(CONTENT_TYPE, APPLICATION_JASON_CHARSET_UTF_8);
         return new ResponseEntity<>(response, responseHeaders, HttpStatus.BAD_REQUEST);
+
+    }
+    @ExceptionHandler(NotFound.class)
+    public HttpEntity<ErrorResponse> handlerValidationException(final  NotFound ex) {
+        List<String> errors = new ArrayList<>();
+        errors.add(ex.getMessage());
+        final ErrorResponse response = new ErrorResponse(errors);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add(CONTENT_TYPE, APPLICATION_JASON_CHARSET_UTF_8);
+        return new ResponseEntity<>(response, responseHeaders, HttpStatus.NOT_FOUND);
 
     }
 

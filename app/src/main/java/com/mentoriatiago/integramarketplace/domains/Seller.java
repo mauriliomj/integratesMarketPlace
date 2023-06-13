@@ -1,18 +1,21 @@
 package com.mentoriatiago.integramarketplace.domains;
 
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
-@EqualsAndHashCode
+@Data
+@Document("sellers")
 public class Seller {
 
     @Id
-    private SellerId sellerId;
+    private String sellerId;
     @Indexed
     private String name;
     @Indexed
@@ -21,9 +24,9 @@ public class Seller {
     private Contact contact;
     @Indexed
     private Address address;
-    /*@Indexed
-    private CreatedDate createdDate;
     @Indexed
-    private LastModifiedDate lastModifiedDate;*/
+    private String createdDate;
+    @Indexed
+    private String lastModifiedDate;
 
 }

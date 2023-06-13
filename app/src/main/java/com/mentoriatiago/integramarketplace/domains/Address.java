@@ -1,11 +1,13 @@
 package com.mentoriatiago.integramarketplace.domains;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 @Getter
 @Setter
+@EqualsAndHashCode
 public class Address {
     @Indexed
     private String street;

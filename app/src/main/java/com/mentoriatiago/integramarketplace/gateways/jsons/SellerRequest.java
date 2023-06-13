@@ -5,16 +5,17 @@ import com.mentoriatiago.integramarketplace.domains.Contact;
 import com.mentoriatiago.integramarketplace.domains.Seller;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
+
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 @EqualsAndHashCode
 public class SellerRequest {
 
-    @NonNull private String name;
-    @NonNull private String registrationCode;
+    @NotNull(message = "{not.null}") private String name;
+    @NotNull(message = "{not.null}") private String registrationCode;
     private Contact contact;
     private Address address;
 

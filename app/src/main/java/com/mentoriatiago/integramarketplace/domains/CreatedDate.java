@@ -2,9 +2,15 @@ package com.mentoriatiago.integramarketplace.domains;
 
 import lombok.Getter;
 
-import java.util.GregorianCalendar;
+import java.util.Date;
+
 
 @Getter
 public class CreatedDate {
-    GregorianCalendar createdDate = new GregorianCalendar();
+    Date createdDate = new Date();
+
+    @Override
+    public String toString() {
+        return createdDate.toString();
+    }
 }
