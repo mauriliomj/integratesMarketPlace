@@ -8,4 +8,8 @@ public interface SellersRepository extends MongoRepository<Seller, String> {
     public default Boolean findByName(String name){
         return true;
     }
+
+    public default Boolean findByRegistrationCode(String registrationCode){
+        return true;
+    }
 }

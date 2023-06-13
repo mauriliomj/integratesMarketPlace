@@ -35,7 +35,9 @@ public class SellersController {
         Seller seller = sellerRequest.toDomain();
 
         if (sellersRepository.findByName(seller.getName())){
-            throw new AlreadyRegistered("Seller já registrado!");
+            if(sellersRepository.findByRegistrationCode(seller.getRegistrationCode())){
+                throw new AlreadyRegistered("Seller já registrado!");
+            }
         } else{
             seller.setSellerId(new SellerId().selerId());
             seller.setCreatedDate(new CreatedDate().toString());
