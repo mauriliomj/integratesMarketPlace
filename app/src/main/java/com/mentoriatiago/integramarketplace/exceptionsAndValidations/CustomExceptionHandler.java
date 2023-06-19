@@ -1,5 +1,6 @@
 package com.mentoriatiago.integramarketplace.exceptionsAndValidations;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @RestControllerAdvice
-public class CustomExceptionHandler {
+public class CustomExceptionHandler{
 
     private static final String CONTENT_TYPE = "Content-Type";
     private static final String APPLICATION_JASON_CHARSET_UTF_8 = "application/jason; charset=utf-8";

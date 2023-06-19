@@ -12,4 +12,8 @@ public interface SellersRepository extends MongoRepository<Seller, String> {
     public default Boolean findByRegistrationCode(String registrationCode){
         return true;
     }
+
+    public default String findAll(Seller seller){
+        return seller.toString();
+    }
 }

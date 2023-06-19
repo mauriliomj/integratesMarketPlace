@@ -55,16 +55,21 @@ public class SellersController {
 
     @PutMapping("/{sellerId}")
     @ApiOperation("Atualiza/modifica os sellers cadastrados.")
-    public void updateSeller(@PathVariable String id, @RequestBody SellerRequest seller){
-        Optional<Seller> test = this.sellersRepository.findById(id);
+    public String updateSeller(@PathVariable String id, @RequestBody SellerRequest updatedSeller) throws NotFound {
+        Optional<Seller> existingSeller = this.sellersRepository.findById(id);
 
-        if(sellersRepository.existsById(id)){
-            seller.setName(seller.getName());
-            seller.setRegistrationCode(seller.getRegistrationCode());
-            seller.setContact(seller.getContact());
-            seller.setAddress(seller.getAddress());
+        if(existingSeller.isPresent()){
+            Seller seller = existingSeller.get();
+            seller.setName(existingSeller.get().getName());
+            seller.setRegistrationCode(existingSeller.get().getRegistrationCode());
+            seller.setContact(existingSeller.get().getContact());
+            seller.setAddress(existingSeller.get().getAddress());
+            seller.setLastModifiedDate(new LastModifiedDate().toString());
+            sellersRepository.save(seller);
+
+            return sellersRepository.findAll(seller);
         } else{
-            throw new RuntimeException();
+            throw new NotFound("Seller não encontrado!");
         }
     }
 
@@ -73,7 +78,7 @@ public class SellersController {
         if(this.sellersRepository.existsById(id)){
             return this.sellersRepository.findById(id);
         } else{
-            throw new NotFound(id);
+            throw new NotFound(id+" Id não encontrado!");
         }
     }
 }

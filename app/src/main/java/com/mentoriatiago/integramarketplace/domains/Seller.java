@@ -8,6 +8,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @Data
@@ -16,8 +18,10 @@ public class Seller {
 
     @Id
     private String sellerId;
+    @NotNull(message = "{not.null}")
     @Indexed
     private String name;
+    @NotNull(message = "{not.null}")
     @Indexed
     private String registrationCode;
     @Indexed

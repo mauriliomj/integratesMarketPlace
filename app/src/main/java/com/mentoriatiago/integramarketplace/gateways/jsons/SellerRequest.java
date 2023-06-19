@@ -14,8 +14,8 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode
 public class SellerRequest {
 
-    @NotNull(message = "{not.null}") private String name;
-    @NotNull(message = "{not.null}") private String registrationCode;
+    private String name;
+    private String registrationCode;
     private Contact contact;
     private Address address;
 
