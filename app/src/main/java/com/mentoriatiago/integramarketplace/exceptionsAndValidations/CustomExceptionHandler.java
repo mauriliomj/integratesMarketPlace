@@ -21,7 +21,7 @@ import static java.util.stream.Collectors.toList;
 public class CustomExceptionHandler{
 
     private static final String CONTENT_TYPE = "Content-Type";
-    private static final String APPLICATION_JASON_CHARSET_UTF_8 = "application/jason; charset=utf-8";
+    private static final String APPLICATION_JSON_CHARSET_UTF_8 = "application/json; charset=utf-8";
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public HttpEntity<ErrorResponse> handlerValidationException(final  MethodArgumentNotValidException ex) {
@@ -30,7 +30,7 @@ public class CustomExceptionHandler{
         final List<FieldError> fieldErrors = bindingResult.getFieldErrors();
         final ErrorResponse response = this.processFieldErrors(fieldErrors);
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add(CONTENT_TYPE, APPLICATION_JASON_CHARSET_UTF_8);
+        responseHeaders.add(CONTENT_TYPE, APPLICATION_JSON_CHARSET_UTF_8);
         return new ResponseEntity<>(response, responseHeaders, HttpStatus.BAD_REQUEST);
 
     }
@@ -41,7 +41,7 @@ public class CustomExceptionHandler{
         errors.add(ex.getMessage());
         final ErrorResponse response = new ErrorResponse(errors);
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add(CONTENT_TYPE, APPLICATION_JASON_CHARSET_UTF_8);
+        responseHeaders.add(CONTENT_TYPE, APPLICATION_JSON_CHARSET_UTF_8);
         return new ResponseEntity<>(response, responseHeaders, HttpStatus.BAD_REQUEST);
 
     }
@@ -51,8 +51,18 @@ public class CustomExceptionHandler{
         errors.add(ex.getMessage());
         final ErrorResponse response = new ErrorResponse(errors);
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add(CONTENT_TYPE, APPLICATION_JASON_CHARSET_UTF_8);
+        responseHeaders.add(CONTENT_TYPE, APPLICATION_JSON_CHARSET_UTF_8);
         return new ResponseEntity<>(response, responseHeaders, HttpStatus.NOT_FOUND);
+
+    }
+    @ExceptionHandler(AlreadyRegisteredException.class)
+    public HttpEntity<ErrorResponse> handlerValidationException(final  AlreadyRegisteredException ex) {
+        List<String> errors = new ArrayList<>();
+        errors.add(ex.getMessage());
+        final ErrorResponse response = new ErrorResponse(errors);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add(CONTENT_TYPE, APPLICATION_JSON_CHARSET_UTF_8);
+        return new ResponseEntity<>(response, responseHeaders, HttpStatus.BAD_REQUEST);
 
     }
 

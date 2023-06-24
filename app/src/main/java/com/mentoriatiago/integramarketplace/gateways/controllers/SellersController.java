@@ -1,21 +1,19 @@
 package com.mentoriatiago.integramarketplace.gateways.controllers;
 
-import com.mentoriatiago.integramarketplace.domains.CreatedDate;
-import com.mentoriatiago.integramarketplace.domains.LastModifiedDate;
-import com.mentoriatiago.integramarketplace.domains.Seller;
-import com.mentoriatiago.integramarketplace.domains.SellerId;
-import com.mentoriatiago.integramarketplace.exceptionsAndValidations.AlreadyRegistered;
+import com.mentoriatiago.integramarketplace.domains.*;
+import com.mentoriatiago.integramarketplace.exceptionsAndValidations.AlreadyRegisteredException;
 import com.mentoriatiago.integramarketplace.exceptionsAndValidations.NotFound;
 import com.mentoriatiago.integramarketplace.gateways.jsons.SellerRequest;
 import com.mentoriatiago.integramarketplace.repositories.SellersRepository;
 import io.swagger.annotations.ApiOperation;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -26,18 +24,17 @@ import java.util.Optional;
 public class SellersController {
 
     @Autowired
-    private SellersRepository sellersRepository;
+    private static SellersRepository sellersRepository;
 
 
+
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     @ApiOperation("Adiciona um novo seller!")
     public void addSellers(@Valid @RequestBody SellerRequest sellerRequest){
         Seller seller = sellerRequest.toDomain();
-
-        if (sellersRepository.findByName(seller.getName())){
-            if(sellersRepository.findByRegistrationCode(seller.getRegistrationCode())){
-                throw new AlreadyRegistered("Seller já registrado!");
-            }
+        if(sellersRepository.findByRegistrationCode(seller.getRegistrationCode()).isPresent()){
+                throw new AlreadyRegisteredException("Seller já registrado!");
         } else{
             seller.setSellerId(new SellerId().selerId());
             seller.setCreatedDate(new CreatedDate().toString());
@@ -48,26 +45,25 @@ public class SellersController {
 
     @GetMapping
     @ApiOperation("Lista os sellers cadastrados.")
-    public List<Seller> sellersList(){
-        return this.sellersRepository.findAll();
-
+    public Page<Seller> getSellers(@RequestParam(defaultValue = "0")int page, @RequestParam(defaultValue = "10")int size){
+        return SellerService.getSellers(page, size);
     }
 
-    @PutMapping("/{sellerId}")
+    @PutMapping(value ="/{sellerId}")
     @ApiOperation("Atualiza/modifica os sellers cadastrados.")
-    public String updateSeller(@PathVariable String id, @RequestBody SellerRequest updatedSeller) throws NotFound {
-        Optional<Seller> existingSeller = this.sellersRepository.findById(id);
+    public Optional<Seller> updateSeller(@PathVariable String sellerId, @RequestBody SellerRequest updatedSeller) throws NotFound {
+        Optional<Seller> existingSeller = this.sellersRepository.findById(sellerId);
 
         if(existingSeller.isPresent()){
             Seller seller = existingSeller.get();
-            seller.setName(existingSeller.get().getName());
-            seller.setRegistrationCode(existingSeller.get().getRegistrationCode());
-            seller.setContact(existingSeller.get().getContact());
-            seller.setAddress(existingSeller.get().getAddress());
+            seller.setName(updatedSeller.getName());
+            seller.setRegistrationCode(updatedSeller.getRegistrationCode());
+            seller.setContact(updatedSeller.getContact());
+            seller.setAddress(updatedSeller.getAddress());
             seller.setLastModifiedDate(new LastModifiedDate().toString());
             sellersRepository.save(seller);
 
-            return sellersRepository.findAll(seller);
+            return sellersRepository.findById(sellerId);
         } else{
             throw new NotFound("Seller não encontrado!");
         }

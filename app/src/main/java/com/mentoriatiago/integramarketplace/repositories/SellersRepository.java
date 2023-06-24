@@ -2,18 +2,17 @@ package com.mentoriatiago.integramarketplace.repositories;
 
 import com.mentoriatiago.integramarketplace.domains.Seller;
 import com.mentoriatiago.integramarketplace.domains.SellerId;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface SellersRepository extends MongoRepository<Seller, String> {
-    public default Boolean findByName(String name){
-        return true;
-    }
+import java.util.Optional;
 
-    public default Boolean findByRegistrationCode(String registrationCode){
-        return true;
-    }
+public interface SellersRepository extends PagingAndSortingRepository<Seller, String> {
 
-    public default String findAll(Seller seller){
-        return seller.toString();
-    }
+    @Override
+    Page<Seller> findAll(Pageable pageable);
+
+    public Optional<Seller> findByRegistrationCode(String registrationCode);
 }
