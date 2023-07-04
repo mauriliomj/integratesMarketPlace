@@ -1,13 +1,13 @@
 package com.mentoriatiago.integramarketplace.gateways.controllers;
 
 import com.mentoriatiago.integramarketplace.domains.*;
-import com.mentoriatiago.integramarketplace.exceptionsAndValidations.AlreadyRegisteredException;
 import com.mentoriatiago.integramarketplace.exceptionsAndValidations.NotFound;
 import com.mentoriatiago.integramarketplace.gateways.jsons.SellerRequest;
 import io.swagger.annotations.ApiOperation;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -34,13 +34,16 @@ public class SellersController {
 
     @GetMapping
     @ApiOperation("Lista os sellers cadastrados.")
-    public Page<Seller> getSellers(@RequestParam(defaultValue = "0")int page, @RequestParam(defaultValue = "10")int size){
-        return sellersService.getSellers(page, size);
+    public CustomPage<Seller> getSellers(@RequestParam(defaultValue = "0")int page,
+                                         @RequestParam(defaultValue = "20") int size){
+        return sellersService.getSellers(PageRequest.of(page, size));
     }
 
     @PutMapping(value ="/{sellerId}")
     @ApiOperation("Atualiza/modifica os sellers cadastrados.")
-    public Optional<Seller> updateSeller(@PathVariable String sellerId, @RequestBody SellerRequest updatedSeller) throws NotFound {
+    public Optional<Seller> updateSeller(@PathVariable String sellerId,
+                                         @RequestBody SellerRequest updatedSeller)
+            throws NotFound {
         return sellersService.updateSeller(sellerId, updatedSeller);
     }
 

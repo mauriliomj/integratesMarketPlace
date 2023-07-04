@@ -1,17 +1,15 @@
 package com.mentoriatiago.integramarketplace.domains;
 
-import com.mentoriatiago.integramarketplace.domains.Seller;
 import com.mentoriatiago.integramarketplace.exceptionsAndValidations.AlreadyRegisteredException;
 import com.mentoriatiago.integramarketplace.exceptionsAndValidations.NotFound;
 import com.mentoriatiago.integramarketplace.gateways.jsons.SellerRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import com.mentoriatiago.integramarketplace.repositories.SellersRepository;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,9 +18,17 @@ public class SellerService {
     @Autowired
     private SellersRepository sellersRepository;
 
-    public Page<Seller> getSellers(int pageNumber, int pageSize){
-        PageRequest pageable = PageRequest.of(pageNumber, pageSize);
-        return sellersRepository.findAll(pageable);
+    public CustomPage<Seller> getSellers(Pageable pageable){
+        Page<Seller> sellersPage = sellersRepository.findAll(pageable);
+
+        List<Seller> sellers = sellersPage.getContent();
+        PaginationData paginationData = new PaginationData();
+        paginationData.setPageNumber(sellersPage.getNumber());
+        paginationData.setPageSize(sellersPage.getSize());
+        paginationData.setTotalPages(sellersPage.getTotalPages());
+        paginationData.setTotalElements(sellersPage.getTotalElements());
+
+        return new CustomPage<>(sellers, paginationData);
     }
 
     public Optional<Seller> findByRegistrationCode(String registrationCode){
